@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Modal,
 } from "react-native";
-import { Picker } from '@react-native-picker/picker'; // Updated import
+import { Picker } from '@react-native-picker/picker';
 
 export default function App() {
   const [task, setTask] = useState("");
@@ -62,10 +62,10 @@ export default function App() {
 
   const saveEdit = () => {
     setTasks(
-      tasks.map((task) =>
-        task.id === editingTask.id
-          ? { ...task, text: task, priority, dueDate }
-          : task
+      tasks.map((t) =>
+        t.id === editingTask.id
+          ? { ...t, text: task, priority, dueDate }
+          : t
       )
     );
     setShowModal(false);
@@ -100,6 +100,19 @@ export default function App() {
     }
     return color;
   };
+
+  function getPriorityColor(priority) {
+    switch (priority) {
+      case "High":
+        return "red";
+      case "Medium":
+        return "orange";
+      case "Low":
+        return "green";
+      default:
+        return "black";
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -200,27 +213,13 @@ export default function App() {
       </Modal>
     </View>
   );
-
-  function getPriorityColor(priority) {
-    switch (priority) {
-      case "High":
-        return "red";
-      case "Medium":
-        return "orange";
-      case "Low":
-        return "green";
-      default:
-        return "black";
-    }
-  }
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#f5f5f5" },
   input: { borderWidth: 1, padding: 10, marginBottom: 10, borderRadius: 5 },
   taskItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
